@@ -5,27 +5,33 @@ package com.matrixprogramming.view; /**
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class SampleFX extends Application
+public class GUI extends Application
 {
 
+    ImageView imageView;
+    StackPane frame;
     public static void main(String[] args)
     {
-        //launch(args);
+        launch(args);
     }
 
     @Override
     public void start(Stage primaryStage)
     {
+        Image image = new Image("https://www.w3schools.com/css/trolltunga.jpg");
+        imageView = new ImageView(image);
         Button btn = new Button("Click Me");
 
         btn.setOnAction(e -> btn_click());
 
-        StackPane frame = new StackPane();
+        frame = new StackPane();
 
-        frame.getChildren().add(btn);
+        frame.getChildren().addAll(imageView, btn);
 
         Scene scene = new Scene(frame, 800, 600);
 
@@ -37,7 +43,9 @@ public class SampleFX extends Application
 
     public void btn_click()
     {
-        System.out.println("You Clicked th button");
+        //frame.getChildren().remove(imageView);
+        imageView.setImage(new Image("http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg"));
+        //frame.getChildren().add(imageView);
     }
 
 }

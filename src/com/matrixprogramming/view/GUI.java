@@ -4,12 +4,19 @@ package com.matrixprogramming.view;
  */
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class GUI extends Application
 {
@@ -23,24 +30,26 @@ public class GUI extends Application
     }
 
     @Override
-    public void start(Stage primaryStage)
+    public void start(Stage primaryStage) throws IOException
     {
+        Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
         Image image = new Image("https://image.tmdb.org/t/p/w342/us4HARgUkkFluMIi7rOklKB0CJ5.jpg");
         imageView = new ImageView(image);
         Button btn = new Button("Click Me");
-
         btn.setOnAction(e -> btn_click());
 
         frame = new StackPane();
 
         frame.getChildren().addAll(imageView, btn);
 
-        Scene scene = new Scene(frame, 800, 600);
+        Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);
 
         primaryStage.setTitle("Movie App");
         primaryStage.show();
+        ListView<String> listView = new ListView<>();
+
     }
 
     public void btn_click()

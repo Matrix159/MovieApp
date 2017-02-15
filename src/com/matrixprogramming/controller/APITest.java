@@ -14,7 +14,8 @@ public class APITest
     public static void main(String[] args)
     {
         MovieAPI movieAPI = new MovieAPI();
-        Call<DiscoverModel> discoverCall = movieAPI.movieAPI.discover();
+        // TODO: Fix this or remove later on
+        /*Call<DiscoverModel> discoverCall = movieAPI.movieAPI.discover();
         discoverCall.enqueue(new Callback<DiscoverModel>()
         {
             @Override
@@ -33,6 +34,6 @@ public class APITest
             {
                 System.out.println("Call failed");
             }
-        });
+        });*/
     }
 }

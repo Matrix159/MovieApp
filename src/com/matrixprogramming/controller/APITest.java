@@ -5,7 +5,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.IOException;
 
 /**
  * Created by Eldridge on 2/14/2017.

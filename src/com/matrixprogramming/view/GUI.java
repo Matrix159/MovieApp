@@ -1,4 +1,5 @@
-package com.matrixprogramming.view; /**
+package com.matrixprogramming.view;
+/**
  * Created by Eldridge on 1/18/2017.
  */
 
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 public class GUI extends Application
 {
 
+    Stage window, welcomeScene, discoverScene, discoverResultScene;
     ImageView imageView;
     StackPane frame;
     public static void main(String[] args)
@@ -23,7 +25,7 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage)
     {
-        Image image = new Image("https://www.w3schools.com/css/trolltunga.jpg");
+        Image image = new Image("https://image.tmdb.org/t/p/w342/us4HARgUkkFluMIi7rOklKB0CJ5.jpg");
         imageView = new ImageView(image);
         Button btn = new Button("Click Me");
 
@@ -37,7 +39,7 @@ public class GUI extends Application
 
         primaryStage.setScene(scene);
 
-        primaryStage.setTitle("No");
+        primaryStage.setTitle("Movie App");
         primaryStage.show();
     }
 

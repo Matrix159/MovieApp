@@ -6,9 +6,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-/**
- * Created by Eldridge on 2/14/2017.
- */
+/***
+ * Created by Eldridge and Sprowls on 2/14/2017.
+ ***/
 public class APITest
 {
     public static void main(String[] args)

@@ -34,7 +34,7 @@ public class MovieAPI
             .build();
 
     // This is the variable we will use to make calls
-    public final IMovieAPI movieAPI = retrofit.create(IMovieAPI.class);
+    public final IMovieAPI controller = retrofit.create(IMovieAPI.class);
 
     public MovieAPI()
     {

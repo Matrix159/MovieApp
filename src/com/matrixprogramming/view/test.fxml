@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -33,12 +33,12 @@
       </MenuBar>
    </top>
    <left>
-      <ListView id="myList" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
+      <ListView id="myList" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox prefWidth="200.0" promptText="Sort by" />
+            <ComboBox id="sortByComboBox" prefWidth="200.0" promptText="Sort by" />
             <Button id="discoverButton" mnemonicParsing="false" text="Discover">
                <VBox.margin>
                   <Insets left="65.0" />

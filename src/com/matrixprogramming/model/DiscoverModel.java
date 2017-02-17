@@ -52,6 +52,10 @@ public class DiscoverModel {
         this.totalPages = totalPages;
     }
 
+    /***
+     * Turns movie object into string
+     * @return String New string form form the object passes in
+     */
     @Override
     public String toString()
     {

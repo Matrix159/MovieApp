@@ -1,7 +1,4 @@
 package com.matrixprogramming.view;
-/**
- * Created by Eldridge on 1/18/2017.
- */
 
 import com.matrixprogramming.controller.MovieAPI;
 import com.matrixprogramming.model.DiscoverModel;
@@ -29,16 +26,19 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.HashMap;
 
+/***
+ * Created by Eldridge on 1/18/2017.
+ */
 public class GUI extends Application
 {
 
-    Stage window, welcomeScene, discoverScene, discoverResultScene;
-    ImageView imageView;
-    ComboBox<String> sortByComboBox;
+    private Stage window, welcomeScene, discoverScene, discoverResultScene;
+    private ImageView imageView;
+    private ComboBox<String> sortByComboBox;
     StackPane frame;
-    MovieAPI movieAPI = new MovieAPI();
-    ObservableList<HBox> items;
-    ListView<HBox> listView;
+    private MovieAPI movieAPI = new MovieAPI();
+    private ObservableList<HBox> items;
+    private ListView<HBox> listView;
     private static int pageCounter = 1;
     private static int pageTotal = 0;
 
@@ -98,6 +98,11 @@ public class GUI extends Application
         window.show();
     }
 
+    /***
+     * Button to allow the user to add a new movie
+     * @param posterPath Path where the movie is to be placed
+     * @param title Title of the movie
+     */
     public void addMovie(String posterPath, String title)
     {
         Platform.runLater(() ->
@@ -111,6 +116,12 @@ public class GUI extends Application
         });
     }
 
+    /***
+     * Allows the user to search much more extensively for movies
+     * @param sortBy String that we need the movies to be sorted by
+     * @param pageCounter Int of the current movie page we're on
+     * @param pageTotal Int that is the total number of pages
+     */
     public void discover(String sortBy, int pageCounter, final int pageTotal)
     {
         movieAPI.controller.discover("en-us", sortBy, "3|2", "US", "en",

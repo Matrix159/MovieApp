@@ -162,6 +162,10 @@ public class Result {
         this.voteAverage = voteAverage;
     }
 
+    /***
+     * Turns object into string
+     * @return String New string that was formed form the passed object
+     */
     @Override
     public String toString()
     {

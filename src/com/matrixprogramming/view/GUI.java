@@ -5,7 +5,9 @@ package com.matrixprogramming.view;
 
 import com.matrixprogramming.controller.MovieAPI;
 import com.matrixprogramming.model.DiscoverModel;
+import com.matrixprogramming.model.Result;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +34,11 @@ public class GUI extends Application
     ImageView imageView;
     StackPane frame;
     MovieAPI movieAPI = new MovieAPI();
+    ObservableList<HBox> items;
+    ListView<HBox> listView;
+    private static int pageCounter = 1;
+    private static int pageTotal = 0;
+
     public static void main(String[] args)
     {
         launch(args);
@@ -52,10 +59,17 @@ public class GUI extends Application
         HBox hBox1 = new HBox();
         Label label1 = new Label("asdasd");
         hBox1.getChildren().addAll(imageView1, label1);
-        ListView<HBox> listView = (ListView<HBox>) root.lookup("#myList");
+        listView = (ListView<HBox>) root.lookup("#myList");
         Button discoverButton = (Button) root.lookup("#discoverButton");
-        discoverButton.setOnAction((e) -> discover("popularity.desc"));
-        ObservableList<HBox> items = FXCollections.observableArrayList(hBox, hBox1);
+        discoverButton.setOnAction((e) ->
+        {
+            pageCounter = 1;
+            pageTotal = 0;
+            items.clear();
+            discover("popularity.desc", 1, pageTotal);
+
+        });
+        items = FXCollections.observableArrayList();
         listView.setItems(items);
         Scene scene = new Scene(root);
         window.setWidth(800);
@@ -66,21 +80,47 @@ public class GUI extends Application
         window.show();
     }
 
-
-
-    public void discover(String sortBy)
+    public void addMovie(String posterPath, String title)
     {
-        movieAPI.controller.discover("en-us", sortBy,"2|3", "US").enqueue(
+        Platform.runLater(() ->
+        {
+            HBox hBox = new HBox();
+            Image image = new Image("https://image.tmdb.org/t/p/w154" + posterPath);
+            ImageView imageView = new ImageView(image);
+            Label label = new Label(title);
+            hBox.getChildren().addAll(imageView, label);
+            items.add(hBox);
+        });
+    }
+
+    public void discover(String sortBy, int pageCounter, final int pageTotal)
+    {
+        movieAPI.controller.discover("en-us", sortBy, "3|2", "US", true, pageCounter, "2017-02-02", "2017-03-02").enqueue(
                 new Callback<DiscoverModel>()
                 {
                     @Override
                     public void onResponse(Call<DiscoverModel> call, Response<DiscoverModel> response)
                     {
-                        if(response.isSuccessful())
+                        if (response.isSuccessful())
                         {
-                            System.out.println(response.body().toString());
-                        }
-                        else
+                            GUI.pageTotal = response.body().getTotalPages();
+                            for (Result result : response.body().getResults())
+                            {
+                                addMovie(result.getPosterPath(), result.getTitle());
+                            }
+
+                            //System.out.println(GUI.pageTotal);
+                            if (GUI.pageCounter < GUI.pageTotal)
+                            {
+                                GUI.pageCounter += 1;
+                                discover("popularity.desc", GUI.pageCounter, GUI.pageTotal);
+
+                            } else
+                            {
+                                Platform.runLater(() -> listView.setItems(items));
+                            }
+
+                        } else
                         {
                             try
                             {

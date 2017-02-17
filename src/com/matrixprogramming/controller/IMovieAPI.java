@@ -16,10 +16,12 @@ public interface IMovieAPI {
             @Query("language") String language,
             @Query("sort_by") String sortBy,
             @Query("with_release_type") String types,
-            @Query("region") String region);
+            @Query("region") String region,
+            @Query("include_adult") boolean includeAdult,
+            @Query("page") int page,
             //@Query("primary_release_year") String releaseYear,
-            //@Query("primary_release_date.gte") String releaseGreaterEqualThan,
-            //@Query("primary_release_date.lte") String releaseLessEqualThan,
+            @Query("primary_release_date.gte") String releaseGreaterEqualThan,
+            @Query("primary_release_date.lte") String releaseLessEqualThan);
             //@Query("vote_average.gte") String voteAvgGreaterEqualThan,
             //@Query("vote_average.lte") String voteAvgLesserEqualThan);
 

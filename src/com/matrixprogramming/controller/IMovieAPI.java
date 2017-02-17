@@ -17,6 +17,7 @@ public interface IMovieAPI {
             @Query("sort_by") String sortBy,
             @Query("with_release_type") String types,
             @Query("region") String region,
+            @Query("with_original_language") String originlanguage,
             @Query("include_adult") boolean includeAdult,
             @Query("page") int page,
             //@Query("primary_release_year") String releaseYear,

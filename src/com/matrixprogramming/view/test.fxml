@@ -38,7 +38,7 @@
    <right>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox prefWidth="200.0" promptText="Sort by" />
+            <ComboBox id="sortByComboBox" prefWidth="200.0" promptText="Sort by" />
             <Button id="discoverButton" mnemonicParsing="false" text="Discover">
                <VBox.margin>
                   <Insets left="65.0" />

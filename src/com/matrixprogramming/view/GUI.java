@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -26,12 +27,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class GUI extends Application
 {
 
     Stage window, welcomeScene, discoverScene, discoverResultScene;
     ImageView imageView;
+    ComboBox<String> sortByComboBox;
     StackPane frame;
     MovieAPI movieAPI = new MovieAPI();
     ObservableList<HBox> items;
@@ -59,14 +62,29 @@ public class GUI extends Application
         HBox hBox1 = new HBox();
         Label label1 = new Label("asdasd");
         hBox1.getChildren().addAll(imageView1, label1);
+        HashMap<String, String> sortByMap = new HashMap<>();
+        sortByMap.put("Popularity Ascending", "popularity.asc");
+        sortByMap.put("Popularity Descending", "popularity.desc");
+        sortByMap.put("Release Date Ascending", "release_date.asc");
+        sortByMap.put("Release Date Descending", "release_date.desc");
+        sortByMap.put("Revenue Ascending", "revenue.asc");
+        sortByMap.put("Revenue Descending", "revenue.desc");
+        sortByMap.put("Vote Average Ascending", "vote_average.asc");
+        sortByMap.put("Vote Average Descending", "vote_average.desc");
+        sortByMap.put("Vote Count Ascending", "vote_count.asc");
+        sortByMap.put("Vote Count Descending", "vote_count.desc");
         listView = (ListView<HBox>) root.lookup("#myList");
+        sortByComboBox = (ComboBox<String>) root.lookup("#sortByComboBox");
+        sortByComboBox.getItems().addAll("Popularity Ascending", "Popularity Descending", "Release Date Ascending",
+                "Release Date Descending", "Revenue Ascending", "Revenue Descending", "Vote Average Ascending",
+                "Vote Average Descending", "Vote Count Ascending", "Vote Count Descending");
         Button discoverButton = (Button) root.lookup("#discoverButton");
         discoverButton.setOnAction((e) ->
         {
             pageCounter = 1;
             pageTotal = 0;
             items.clear();
-            discover("popularity.desc", 1, pageTotal);
+            discover(sortByMap.get(sortByComboBox.getValue()), 1, pageTotal);
 
         });
         items = FXCollections.observableArrayList();
@@ -95,7 +113,8 @@ public class GUI extends Application
 
     public void discover(String sortBy, int pageCounter, final int pageTotal)
     {
-        movieAPI.controller.discover("en-us", sortBy, "3|2", "US", true, pageCounter, "2017-02-02", "2017-03-02").enqueue(
+        movieAPI.controller.discover("en-us", sortBy, "3|2", "US", "en",
+                true, pageCounter, "2017-02-02", "2017-03-02").enqueue(
                 new Callback<DiscoverModel>()
                 {
                     @Override

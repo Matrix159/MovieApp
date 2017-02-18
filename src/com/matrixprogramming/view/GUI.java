@@ -16,8 +16,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,10 +110,25 @@ public class GUI extends Application
         Platform.runLater(() ->
         {
             HBox hBox = new HBox();
+            VBox vBox = new VBox();
+            BorderPane borderPane = new BorderPane();
             Image image = new Image("https://image.tmdb.org/t/p/w154" + posterPath);
             ImageView imageView = new ImageView(image);
-            Label label = new Label(title);
-            hBox.getChildren().addAll(imageView, label);
+            System.out.println(imageView.getFitWidth());
+            Text titleText = new Text(title);
+            titleText.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 22.0));
+
+            Image starIcon = new Image(getClass().getResourceAsStream("/star.png"));
+            ImageView starImageView = new ImageView(starIcon);
+            starImageView.setFitHeight(24);
+            starImageView.setFitWidth(24);
+            borderPane.setLeft(titleText);
+            borderPane.setRight(starImageView);
+
+
+
+            vBox.getChildren().add(borderPane);
+            hBox.getChildren().addAll(imageView, vBox);
             items.add(hBox);
         });
     }

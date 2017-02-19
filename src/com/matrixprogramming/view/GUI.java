@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -105,30 +106,43 @@ public class GUI extends Application
      * @param posterPath Path where the movie is to be placed
      * @param title Title of the movie
      */
-    public void addMovie(String posterPath, String title)
+    public void addMovie(String posterPath, String title, double voteAverage, String overview)
     {
         Platform.runLater(() ->
         {
-            HBox hBox = new HBox();
+            HBox hBox = new HBox(5);
+            hBox.setPrefWidth(600);
+            hBox.setMaxWidth(600);
             VBox vBox = new VBox();
-            BorderPane borderPane = new BorderPane();
+            vBox.setSpacing(4);
+
+            HBox titleHBox = new HBox(30);
+            titleHBox.setAlignment(Pos.CENTER_LEFT);
             Image image = new Image("https://image.tmdb.org/t/p/w154" + posterPath);
             ImageView imageView = new ImageView(image);
-            System.out.println(imageView.getFitWidth());
             Text titleText = new Text(title);
-            titleText.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 22.0));
+            titleText.setWrappingWidth(200);
+            titleText.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 16.0));
 
+            Label voteAverageLabel = new Label(String.valueOf(voteAverage));
+            voteAverageLabel.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 16.0));
+            HBox ratingBox = new HBox();
+            ratingBox.setAlignment(Pos.CENTER);
             Image starIcon = new Image(getClass().getResourceAsStream("/star.png"));
             ImageView starImageView = new ImageView(starIcon);
-            starImageView.setFitHeight(24);
-            starImageView.setFitWidth(24);
-            borderPane.setLeft(titleText);
-            borderPane.setRight(starImageView);
+            starImageView.setPreserveRatio(true);
+            starImageView.setFitHeight(17);
+
+            ratingBox.getChildren().addAll(voteAverageLabel, starImageView);
+
+            titleHBox.getChildren().addAll(titleText, ratingBox);
 
 
-
-            vBox.getChildren().add(borderPane);
+            Text overviewText = new Text(overview);
+            overviewText.setWrappingWidth(300);
+            vBox.getChildren().addAll(titleHBox, overviewText);
             hBox.getChildren().addAll(imageView, vBox);
+
             items.add(hBox);
         });
     }
@@ -142,7 +156,7 @@ public class GUI extends Application
     public void discover(String sortBy, int pageCounter, final int pageTotal)
     {
         movieAPI.controller.discover("en-us", sortBy, "3|2", "US", "en",
-                true, pageCounter, "2017-02-02", "2017-03-02").enqueue(
+                true, pageCounter, "2017-02-05", "2017-03-05").enqueue(
                 new Callback<DiscoverModel>()
                 {
                     @Override
@@ -153,14 +167,14 @@ public class GUI extends Application
                             GUI.pageTotal = response.body().getTotalPages();
                             for (Result result : response.body().getResults())
                             {
-                                addMovie(result.getPosterPath(), result.getTitle());
+                                addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(), result.getOverview());
                             }
 
                             //System.out.println(GUI.pageTotal);
                             if (GUI.pageCounter < GUI.pageTotal)
                             {
                                 GUI.pageCounter += 1;
-                                discover("popularity.desc", GUI.pageCounter, GUI.pageTotal);
+                                discover(sortBy, GUI.pageCounter, GUI.pageTotal);
 
                             } else
                             {

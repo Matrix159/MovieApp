@@ -44,7 +44,7 @@ public class GUI extends Application
     private ListView<HBox> listView;
     private static int pageCounter = 1;
     private static int pageTotal = 0;
-
+    private HashMap<String, String> sortByMap = new HashMap<>();
     public static void main(String[] args)
     {
         launch(args);
@@ -54,7 +54,7 @@ public class GUI extends Application
     public void start(Stage primaryStage) throws IOException
     {
         window = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("discover_scene.fxml"));
         Image image = new Image("https://image.tmdb.org/t/p/w154/us4HARgUkkFluMIi7rOklKB0CJ5.jpg");
         imageView = new ImageView(image);
         Image image1 = new Image("https://image.tmdb.org/t/p/w154/us4HARgUkkFluMIi7rOklKB0CJ5.jpg");
@@ -65,17 +65,7 @@ public class GUI extends Application
         HBox hBox1 = new HBox();
         Label label1 = new Label("asdasd");
         hBox1.getChildren().addAll(imageView1, label1);
-        HashMap<String, String> sortByMap = new HashMap<>();
-        sortByMap.put("Popularity Ascending", "popularity.asc");
-        sortByMap.put("Popularity Descending", "popularity.desc");
-        sortByMap.put("Release Date Ascending", "release_date.asc");
-        sortByMap.put("Release Date Descending", "release_date.desc");
-        sortByMap.put("Revenue Ascending", "revenue.asc");
-        sortByMap.put("Revenue Descending", "revenue.desc");
-        sortByMap.put("Vote Average Ascending", "vote_average.asc");
-        sortByMap.put("Vote Average Descending", "vote_average.desc");
-        sortByMap.put("Vote Count Ascending", "vote_count.asc");
-        sortByMap.put("Vote Count Descending", "vote_count.desc");
+        sortByMapSetup(sortByMap);
         listView = (ListView<HBox>) root.lookup("#myList");
         sortByComboBox = (ComboBox<String>) root.lookup("#sortByComboBox");
         sortByComboBox.getItems().addAll("Popularity Ascending", "Popularity Descending", "Release Date Ascending",
@@ -110,6 +100,20 @@ public class GUI extends Application
     {
         Platform.runLater(() ->
         {
+            HBox root;
+            MovieController movieController;
+            try
+            {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("movie_item.fxml"));
+                root = (HBox)loader.load();
+                movieController = loader.getController();
+
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                return;
+            }
+            /*
             HBox hBox = new HBox(5);
             hBox.setPrefWidth(600);
             hBox.setMaxWidth(600);
@@ -142,8 +146,13 @@ public class GUI extends Application
             overviewText.setWrappingWidth(300);
             vBox.getChildren().addAll(titleHBox, overviewText);
             hBox.getChildren().addAll(imageView, vBox);
-
-            items.add(hBox);
+            */
+            movieController.posterImage.setImage(new Image("https://image.tmdb.org/t/p/w154" + posterPath));
+            movieController.movieTitleText.setText(title);
+            movieController.voteAverageLabel.setText(String.valueOf(voteAverage));
+            movieController.movieDescription.setText(overview);
+            movieController.starIcon.setImage(new Image(getClass().getResourceAsStream("/star.png")));
+            items.add(root);
         });
     }
 
@@ -200,6 +209,24 @@ public class GUI extends Application
                     }
                 }
         );
+    }
+
+    /**
+     * Sets up the sortByMap for the sort by combobox
+     * @param sortByMap The Hashmap to map sort by values for discover scene
+     */
+    public void sortByMapSetup(HashMap<String, String> sortByMap)
+    {
+        sortByMap.put("Popularity Ascending", "popularity.asc");
+        sortByMap.put("Popularity Descending", "popularity.desc");
+        sortByMap.put("Release Date Ascending", "release_date.asc");
+        sortByMap.put("Release Date Descending", "release_date.desc");
+        sortByMap.put("Revenue Ascending", "revenue.asc");
+        sortByMap.put("Revenue Descending", "revenue.desc");
+        sortByMap.put("Vote Average Ascending", "vote_average.asc");
+        sortByMap.put("Vote Average Descending", "vote_average.desc");
+        sortByMap.put("Vote Count Ascending", "vote_count.asc");
+        sortByMap.put("Vote Count Descending", "vote_count.desc");
     }
 
 }

@@ -27,6 +27,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 /***
@@ -45,6 +49,7 @@ public class GUI extends Application
     private static int pageCounter = 1;
     private static int pageTotal = 0;
     private HashMap<String, String> sortByMap = new HashMap<>();
+
     public static void main(String[] args)
     {
         launch(args);
@@ -77,7 +82,7 @@ public class GUI extends Application
             pageCounter = 1;
             pageTotal = 0;
             items.clear();
-            discover(sortByMap.get(sortByComboBox.getValue()), 1, pageTotal);
+            discover(sortByMap.get(sortByComboBox.getValue()), 1);
 
         });
         items = FXCollections.observableArrayList();
@@ -96,7 +101,7 @@ public class GUI extends Application
      * @param posterPath Path where the movie is to be placed
      * @param title Title of the movie
      */
-    public void addMovie(String posterPath, String title, double voteAverage, String overview)
+    public void addMovie(String posterPath, String title, double voteAverage, String overview, String releaseDate)
     {
         Platform.runLater(() ->
         {
@@ -105,7 +110,7 @@ public class GUI extends Application
             try
             {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("movie_item.fxml"));
-                root = (HBox)loader.load();
+                root = (HBox) loader.load();
                 movieController = loader.getController();
 
             } catch (IOException e)
@@ -152,6 +157,7 @@ public class GUI extends Application
             movieController.voteAverageLabel.setText(String.valueOf(voteAverage));
             movieController.movieDescription.setText(overview);
             movieController.starIcon.setImage(new Image(getClass().getResourceAsStream("/star.png")));
+            movieController.movieReleaseDate.setText(releaseDate);
             items.add(root);
         });
     }
@@ -160,12 +166,18 @@ public class GUI extends Application
      * Allows the user to search much more extensively for movies
      * @param sortBy String that we need the movies to be sorted by
      * @param pageCounter Int of the current movie page we're on
-     * @param pageTotal Int that is the total number of pages
      */
-    public void discover(String sortBy, int pageCounter, final int pageTotal)
+    public void discover(String sortBy, int pageCounter)
     {
+
+        LocalDate now = LocalDate.now();
+
+        LocalDate twoWeeksAgo = now.minusWeeks(2);
+        LocalDate twoWeeksAhead = now.plusWeeks(2);
+        System.out.println(twoWeeksAgo);
+        System.out.println(twoWeeksAhead);
         movieAPI.controller.discover("en-us", sortBy, "3|2", "US", "en",
-                true, pageCounter, "2017-02-05", "2017-03-05").enqueue(
+                true, pageCounter, twoWeeksAgo.toString(), twoWeeksAhead.toString()).enqueue(
                 new Callback<DiscoverModel>()
                 {
                     @Override
@@ -176,14 +188,14 @@ public class GUI extends Application
                             GUI.pageTotal = response.body().getTotalPages();
                             for (Result result : response.body().getResults())
                             {
-                                addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(), result.getOverview());
+                                addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(), result.getOverview(), result.getReleaseDate());
                             }
 
                             //System.out.println(GUI.pageTotal);
                             if (GUI.pageCounter < GUI.pageTotal)
                             {
                                 GUI.pageCounter += 1;
-                                discover(sortBy, GUI.pageCounter, GUI.pageTotal);
+                                discover(sortBy, GUI.pageCounter);
 
                             } else
                             {
@@ -213,6 +225,7 @@ public class GUI extends Application
 
     /**
      * Sets up the sortByMap for the sort by combobox
+     *
      * @param sortByMap The Hashmap to map sort by values for discover scene
      */
     public void sortByMapSetup(HashMap<String, String> sortByMap)

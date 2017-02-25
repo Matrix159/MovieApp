@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MovieAPI
 {
-    // This is the httpclient that adds default headers and query strings
+    /** The httpclient that adds default headers and query strings. */
     private final OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addInterceptor(chain ->
     {
         HttpUrl originalHttpUrl = chain.request().url();
@@ -26,16 +26,18 @@ public class MovieAPI
         return chain.proceed(request);
     });
 
-    // A retrofit builder code to get it up and running
+    /** A retrofit builder code to get it up and running. */
     private final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .client(httpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-
-    // This is the variable we will use to make calls
+    /** the variable we will use to make calls. **/
     public final IMovieAPI controller = retrofit.create(IMovieAPI.class);
 
+    /***
+     * Stuff.
+     */
     public MovieAPI()
     {
 

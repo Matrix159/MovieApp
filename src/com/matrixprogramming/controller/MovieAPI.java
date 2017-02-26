@@ -10,14 +10,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /***
  * Created by Eldridge on 2/14/2017.
  */
-public class MovieAPI
-{
+public class MovieAPI {
     /** The httpclient that adds default headers and query strings. */
-    private final OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addInterceptor(chain ->
-    {
+    private final OkHttpClient.Builder httpClient =
+            new OkHttpClient.Builder().addInterceptor(chain -> {
         HttpUrl originalHttpUrl = chain.request().url();
         HttpUrl url = originalHttpUrl.newBuilder()
-                .addQueryParameter("api_key", "ea4a9abb14b2368e6a68f4e9c50e975f")
+                .addQueryParameter("api_key",
+                        "ea4a9abb14b2368e6a68f4e9c50e975f")
                 .build();
         System.out.println(url);
         Request request = chain.request().newBuilder()
@@ -33,13 +33,19 @@ public class MovieAPI
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     /** the variable we will use to make calls. **/
-    public final IMovieAPI controller = retrofit.create(IMovieAPI.class);
+    private final IMovieAPI controller = retrofit.create(IMovieAPI.class);
+
+    /***
+     * Getting the controller.
+     * @return Control
+     */
+    public IMovieAPI getController() {
+        return this.controller;
+    }
 
     /***
      * Stuff.
      */
-    public MovieAPI()
-    {
-
+    public MovieAPI() {
     }
 }

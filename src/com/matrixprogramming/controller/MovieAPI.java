@@ -6,18 +6,15 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
 /***
- * Created by Eldridge & Sprowls on 2/14/2017.
+ * RESTful class to make calls to the movieDB API.
  */
-public class MovieAPI
-{
+public class MovieAPI {
     /**
      * The httpclient that adds default headers and query strings.
      */
     private final OkHttpClient.Builder httpClient =
-            new OkHttpClient.Builder().addInterceptor(chain ->
-            {
+            new OkHttpClient.Builder().addInterceptor(chain -> {
                 HttpUrl originalHttpUrl = chain.request().url();
                 HttpUrl url = originalHttpUrl.newBuilder()
                         .addQueryParameter("api_key",
@@ -39,7 +36,7 @@ public class MovieAPI
             .addConverterFactory(GsonConverterFactory.create())
             .build();
     /**
-     * The controller to make calls to the movieDB API
+     * The controller to make calls to the movieDB API.
      **/
     private final IMovieAPI controller = retrofit.create(IMovieAPI.class);
 
@@ -47,15 +44,13 @@ public class MovieAPI
      * Getting the controller.
      * @return IMovieAPI instance
      */
-    public IMovieAPI getController()
-    {
+    public IMovieAPI getController() {
         return this.controller;
     }
 
     /***
-     * Constructor for the MovieAPI instance
+     * Constructor for the MovieAPI instance.
      */
-    public MovieAPI()
-    {
+    public MovieAPI() {
     }
 }

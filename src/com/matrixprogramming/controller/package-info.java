@@ -1,4 +1,4 @@
 /***
- * Created by Eldridge on 2/14/2017.
+ * Contains the necessary code for accessing the MovieDB API.
  */
 package com.matrixprogramming.controller;

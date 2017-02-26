@@ -1,4 +1,4 @@
 /***
- * Created by Cameron Sprowls on 2/24/2017.
+ * Contains all view related classes.
  */
 package com.matrixprogramming.view;

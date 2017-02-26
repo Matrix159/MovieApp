@@ -1,4 +1,4 @@
 /***
- * Created by Cameron Sprowls on 2/24/2017.
+ * Tools for the developers.
  */
 package com.matrixprogramming.tools;

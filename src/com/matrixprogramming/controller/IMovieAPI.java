@@ -15,7 +15,7 @@ public interface IMovieAPI {
      * @param sortBy Way to sort the movie
      * @param types Type of movie
      * @param region Region the movie is in
-     * @param originlanguage Original language of the movie
+     * @param originLanguage Original language of the movie
      * @param includeAdult If the movie is adult only,  or not
      * @param page Page of the movie
      * @param releaseGreaterEqualThan Release date of movie
@@ -28,7 +28,7 @@ public interface IMovieAPI {
             @Query("sort_by") String sortBy,
             @Query("with_release_type") String types,
             @Query("region") String region,
-            @Query("with_original_language") String originlanguage,
+            @Query("with_original_language") String originLanguage,
             @Query("include_adult") boolean includeAdult,
             @Query("page") int page,
             @Query("primary_release_date.gte") String releaseGreaterEqualThan,

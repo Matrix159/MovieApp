@@ -1,5 +1,6 @@
 package com.matrixprogramming.view;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -13,16 +14,22 @@ import java.util.ResourceBundle;
  */
 public class MovieController implements Initializable
 {
+    @FXML
     public ImageView posterImage;
+    @FXML
     public Text movieTitleText;
+    @FXML
     public Label voteAverageLabel;
+    @FXML
     public Text movieDescription;
+    @FXML
     public Text movieReleaseDate;
+    @FXML
     public ImageView starIcon;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        //System.out.println("Initialized a movie.");
+
     }
 }

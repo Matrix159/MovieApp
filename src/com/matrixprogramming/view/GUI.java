@@ -128,40 +128,7 @@ public class GUI extends Application {
                 e.printStackTrace();
                 return;
             }
-            /*
-            HBox hBox = new HBox(5);
-            hBox.setPrefWidth(600);
-            hBox.setMaxWidth(600);
-            VBox vBox = new VBox();
-            vBox.setSpacing(4);
 
-            HBox titleHBox = new HBox(30);
-            titleHBox.setAlignment(Pos.CENTER_LEFT);
-            Image image = new Image("https://image.tmdb.org/t/p/w154" + posterPath);
-            ImageView imageView = new ImageView(image);
-            Text titleText = new Text(title);
-            titleText.setWrappingWidth(200);
-            titleText.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 16.0));
-
-            Label voteAverageLabel = new Label(String.valueOf(voteAverage));
-            voteAverageLabel.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 16.0));
-            HBox ratingBox = new HBox();
-            ratingBox.setAlignment(Pos.CENTER);
-            Image starIcon = new Image(getClass().getResourceAsStream("/star.png"));
-            ImageView starImageView = new ImageView(starIcon);
-            starImageView.setPreserveRatio(true);
-            starImageView.setFitHeight(17);
-
-            ratingBox.getChildren().addAll(voteAverageLabel, starImageView);
-
-            titleHBox.getChildren().addAll(titleText, ratingBox);
-
-
-            Text overviewText = new Text(overview);
-            overviewText.setWrappingWidth(300);
-            vBox.getChildren().addAll(titleHBox, overviewText);
-            hBox.getChildren().addAll(imageView, vBox);
-            */
             movieController.posterImage.setImage(new Image("https://image.tmdb.org/t/p/w154" + posterPath));
             movieController.movieTitleText.setText(title);
             movieController.voteAverageLabel.setText(String.valueOf(voteAverage));

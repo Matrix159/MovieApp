@@ -9,6 +9,19 @@ import retrofit2.http.Query;
  * Created by Eldridge on 2/14/2017.
  */
 public interface IMovieAPI {
+    /***
+     * Using the API to get the date we will be using for the movie.
+     * @param language Language of the movie
+     * @param sortBy Way to sort the movie
+     * @param types Type of movie
+     * @param region Region the movie is in
+     * @param originlanguage Original language of the movie
+     * @param includeAdult If the movie is adult only,  or not
+     * @param page Page of the movie
+     * @param releaseGreaterEqualThan Release date of movie
+     * @param releaseLessEqualThan Release date of movie
+     * @return Movie object with everything intact
+     */
     @GET("discover/movie")
     Call<DiscoverModel> discover(
             @Query("language") String language,

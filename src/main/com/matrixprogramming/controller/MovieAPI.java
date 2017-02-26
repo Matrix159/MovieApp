@@ -1,4 +1,4 @@
-package com.matrixprogramming.controller;
+package main.com.matrixprogramming.controller;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;

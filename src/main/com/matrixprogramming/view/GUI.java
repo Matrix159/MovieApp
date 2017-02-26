@@ -1,8 +1,8 @@
-package com.matrixprogramming.view;
+package main.com.matrixprogramming.view;
 
-import com.matrixprogramming.controller.MovieAPI;
-import com.matrixprogramming.model.DiscoverModel;
-import com.matrixprogramming.model.Result;
+import main.com.matrixprogramming.controller.MovieAPI;
+import main.com.matrixprogramming.model.DiscoverModel;
+import main.com.matrixprogramming.model.Result;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -84,7 +84,6 @@ public class GUI extends Application
         sortByMapSetup(sortByMap);
         BorderPane root;
         DiscoverSceneController discoverSceneController;
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("discover_scene.fxml"));
         root = loader.load();
         discoverSceneController = loader.getController();

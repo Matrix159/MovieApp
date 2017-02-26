@@ -1,4 +1,4 @@
-package com.matrixprogramming.view;
+package main.com.matrixprogramming.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

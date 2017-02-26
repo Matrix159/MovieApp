@@ -1,6 +1,6 @@
-package com.matrixprogramming.controller;
+package main.com.matrixprogramming.controller;
 
-import com.matrixprogramming.model.DiscoverModel;
+import main.com.matrixprogramming.model.DiscoverModel;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

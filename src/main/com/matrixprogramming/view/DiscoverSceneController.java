@@ -35,7 +35,7 @@ public final class DiscoverSceneController implements Initializable {
      * Returns the combo box with sorting options from fxml.
      * @return ComboBox
      */
-    ComboBox getSortByComboBox() {
+    public ComboBox getSortByComboBox() {
         return sortByComboBox;
     }
 
@@ -43,7 +43,7 @@ public final class DiscoverSceneController implements Initializable {
      * Returns the discover button from fxml.
      * @return Button
      */
-    Button getDiscoverButton() {
+    public Button getDiscoverButton() {
         return discoverButton;
     }
 
@@ -51,7 +51,7 @@ public final class DiscoverSceneController implements Initializable {
      * Returns the movie list view from fxml.
      * @return ListView
      */
-    ListView getMovieListView() {
+    public ListView getMovieListView() {
         return movieListView;
     }
 }

@@ -25,14 +25,14 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 /***
- * Created by Eldridge on 1/18/2017.
+ * GUI class that displays the main program window and handles all user
+ * actions.
  */
-public class GUI extends Application
-{
+public final class GUI extends Application {
 
 
     /**
-     * Combo box containing sorting options
+     * Combo box containing sorting options.
      */
     private ComboBox<String> sortByComboBox;
 
@@ -52,7 +52,7 @@ public class GUI extends Application
     private ListView<HBox> listView;
 
     /**
-     * Discover button for GUI
+     * Discover button for GUI.
      */
     private Button discoverButton;
     /**
@@ -70,17 +70,26 @@ public class GUI extends Application
      **/
     private HashMap<String, String> sortByMap = new HashMap<>();
 
-    public static void main(String[] args)
-    {
+    /**
+     * Window height and width constants for main window.
+     */
+    private static final int WINDOW_WIDTH = 800, WINDOW_HEIGHT = 600;
+
+    /**
+     * The main starting point of the program.
+     * @param args Arguments from commandline
+     */
+    public static void main(final String[] args) {
         launch(args);
     }
 
+    /**
+     * Start method called upon launch(String[] args).
+     * @param window The main stage
+     * @throws IOException
+     */
     @Override
-    public void start(Stage window) throws IOException
-    {
-        final int windowWidth = 800;
-        final int windowHeight = 600;
-
+    public void start(final Stage window) throws IOException {
         sortByMapSetup(sortByMap);
         BorderPane root;
         DiscoverSceneController discoverSceneController;
@@ -96,8 +105,7 @@ public class GUI extends Application
                 "Vote Average Descending", "Vote Count Ascending",
                 "Vote Count Descending");
         discoverButton = discoverSceneController.getDiscoverButton();
-        discoverButton.setOnAction((e) ->
-        {
+        discoverButton.setOnAction((e) -> {
             pageCounter = 1;
             pageTotal = 0;
             items.clear();
@@ -107,8 +115,8 @@ public class GUI extends Application
         items = FXCollections.observableArrayList();
         listView.setItems(items);
         Scene scene = new Scene(root);
-        window.setWidth(windowWidth);
-        window.setHeight(windowHeight);
+        window.setWidth(WINDOW_WIDTH);
+        window.setHeight(WINDOW_HEIGHT);
         window.setScene(scene);
         window.setResizable(false);
         window.setTitle("Movie App");
@@ -123,86 +131,74 @@ public class GUI extends Application
      * @param overview Small description of movie
      * @param releaseDate Release date of movie
      */
-    private void addMovie(final String posterPath,
+    public void addMovie(final String posterPath,
                           final String title,
                           final double voteAverage,
                           final String overview,
-                          final String releaseDate)
-    {
-        Platform.runLater(() ->
-        {
+                          final String releaseDate) {
+        Platform.runLater(() -> {
             HBox root;
             MovieController movieController;
-            try
-            {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("movie_item.fxml"));
                 root = loader.load();
                 movieController = loader.getController();
 
-            } catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
                 return;
             }
 
-            movieController.posterImage.setImage(new Image("https://image.tmdb.org/t/p/w154" + posterPath));
-            movieController.movieTitleText.setText(title);
-            movieController.voteAverageLabel.setText(String.valueOf(voteAverage));
-            movieController.movieDescription.setText(overview);
-            movieController.starIcon.setImage(new Image(getClass().getResourceAsStream("/star.png")));
-            movieController.movieReleaseDate.setText(releaseDate);
+            movieController.getPosterImage().setImage(new Image("https://image.tmdb.org/t/p/w154" + posterPath));
+            movieController.getMovieTitleText().setText(title);
+            movieController.getVoteAverageLabel().setText(String.valueOf(voteAverage));
+            movieController.getMovieDescription().setText(overview);
+            movieController.getStarIcon().setImage(new Image(getClass().getResourceAsStream("/star.png")));
+            movieController.getMovieReleaseDate().setText(releaseDate);
             items.add(root);
         });
+
     }
 
     /*****
      * Allows the user to search much more extensively for movies.
      * @param sortBy String that we need the movies to be sorted by
-     * @param pageCounter Int of the current movie page we're on
+     * @param localPageCounter Int of the current movie page we're on
      ****/
-    private void discover(final String sortBy, final int pageCounter)
-    {
+    private void discover(final String sortBy, final int localPageCounter) {
 
         LocalDate now = LocalDate.now();
 
         LocalDate twoWeeksAgo = now.minusWeeks(2);
         LocalDate twoWeeksAhead = now.plusWeeks(2);
+
         System.out.println(twoWeeksAgo);
         System.out.println(twoWeeksAhead);
         movieAPI.getController().discover("en-us", sortBy,
                 "3|2", "US", "en", true,
-                pageCounter, twoWeeksAgo.toString(),
+                localPageCounter, twoWeeksAgo.toString(),
                 twoWeeksAhead.toString()).enqueue(
-                new Callback<DiscoverModel>()
-                {
+                new Callback<DiscoverModel>() {
                     @Override
-                    public void onResponse(final Call<DiscoverModel> call, final Response<DiscoverModel> response)
-                    {
-                        if (response.isSuccessful())
-                        {
+                    public void onResponse(final Call<DiscoverModel> call, final Response<DiscoverModel> response) {
+                        if (response.isSuccessful()) {
                             GUI.pageTotal = response.body().getTotalPages();
-                            for (Result result : response.body().getResults())
-                            {
+                            for (Result result : response.body().getResults()) {
                                 addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(), result.getOverview(), result.getReleaseDate());
                             }
 
-                            if (GUI.pageCounter < GUI.pageTotal)
-                            {
+                            if (GUI.pageCounter < GUI.pageTotal) {
                                 GUI.pageCounter += 1;
                                 discover(sortBy, GUI.pageCounter);
 
-                            } else
-                            {
+                            } else {
                                 Platform.runLater(() -> listView.setItems(items));
                             }
 
-                        } else
-                        {
-                            try
-                            {
+                        } else {
+                            try {
                                 System.out.println("Error: " + response.errorBody().string());
-                            } catch (IOException e)
-                            {
+                            } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
@@ -210,8 +206,7 @@ public class GUI extends Application
 
                     @Override
                     public void onFailure(final Call<DiscoverModel> call,
-                                          final Throwable t)
-                    {
+                                          final Throwable t) {
                         System.out.println("Retrofit call failed.");
                     }
                 }
@@ -224,8 +219,7 @@ public class GUI extends Application
      * @param sortMovieByMap The Hashmap to map sort by values for
      *                       discover scene
      */
-    private void sortByMapSetup(final HashMap<String, String> sortMovieByMap)
-    {
+    private void sortByMapSetup(final HashMap<String, String> sortMovieByMap) {
         sortMovieByMap.put("Popularity Ascending", "popularity.asc");
         sortMovieByMap.put("Popularity Descending", "popularity.desc");
         sortMovieByMap.put("Release Date Ascending", "release_date.asc");
@@ -237,5 +231,16 @@ public class GUI extends Application
         sortMovieByMap.put("Vote Count Ascending", "vote_count.asc");
         sortMovieByMap.put("Vote Count Descending", "vote_count.desc");
     }
+
+    /**
+     * Returns the list view holding the movie views.
+     * @return ListView
+     */
+    public ListView<HBox> getListView()
+    {
+        return listView;
+    }
+
+
 
 }

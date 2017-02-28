@@ -9,8 +9,7 @@ import com.google.gson.annotations.SerializedName;
 /***
  * POGO to get every/anything on a movie.
  */
-public class Result
-{
+public class Result {
 
     /**
      * Poster path of movie.
@@ -101,8 +100,7 @@ public class Result
      * Gets poster path.
      * @return Poster path
      */
-    public String getPosterPath()
-    {
+    public String getPosterPath() {
         return posterPath;
     }
 
@@ -111,8 +109,7 @@ public class Result
      * Checks if the movie is adult only (true/false).
      * @return Boolean if movie is adult only
      */
-    public boolean isAdult()
-    {
+    public boolean isAdult() {
         return adult;
     }
 
@@ -121,8 +118,7 @@ public class Result
      * Gets overview of movie.
      * @return Movie overview
      */
-    public String getOverview()
-    {
+    public String getOverview() {
         return overview;
     }
 
@@ -131,8 +127,7 @@ public class Result
      * Gets release date of movie.
      * @return Movie release date.
      */
-    public String getReleaseDate()
-    {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
@@ -141,8 +136,7 @@ public class Result
      * Gets genre IDs.
      * @return Genre IDs
      */
-    public List<Integer> getGenreIds()
-    {
+    public List<Integer> getGenreIds() {
         return genreIds;
     }
 
@@ -151,8 +145,7 @@ public class Result
      * Gets movie ID.
      * @return ID
      */
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
@@ -161,8 +154,7 @@ public class Result
      * Gets original title.
      * @return Original title
      */
-    public String getOriginalTitle()
-    {
+    public String getOriginalTitle() {
         return originalTitle;
     }
 
@@ -171,8 +163,7 @@ public class Result
      * Gets original language.
      * @return Original language
      */
-    public String getOriginalLanguage()
-    {
+    public String getOriginalLanguage() {
         return originalLanguage;
     }
 
@@ -181,8 +172,7 @@ public class Result
      * Gets title.
      * @return Title
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
@@ -191,8 +181,7 @@ public class Result
      * Gets the backdrop path.
      * @return Backdrop path
      */
-    public String getBackdropPath()
-    {
+    public String getBackdropPath() {
         return backdropPath;
     }
 
@@ -201,8 +190,7 @@ public class Result
      * Gets the popularity.
      * @return Popularity to be obtained
      */
-    public double getPopularity()
-    {
+    public double getPopularity() {
         return popularity;
     }
 
@@ -211,8 +199,7 @@ public class Result
      * Gets the vote count.
      * @return Vote count
      */
-    public int getVoteCount()
-    {
+    public int getVoteCount() {
         return voteCount;
     }
 
@@ -221,8 +208,7 @@ public class Result
      * Returns if the video is true/false.
      * @return True/false based on video
      */
-    public boolean isVideo()
-    {
+    public boolean isVideo() {
         return video;
     }
 
@@ -231,8 +217,7 @@ public class Result
      * Gets the voting average of the movie.
      * @return VoteAverage
      */
-    public double getVoteAverage()
-    {
+    public double getVoteAverage() {
         return voteAverage;
     }
 
@@ -242,8 +227,7 @@ public class Result
      * @return String New string that was formed form the passed object
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Result{"
                 + "posterPath='" + posterPath + '\''
                 + ", adult=" + adult

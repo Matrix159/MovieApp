@@ -8,8 +8,7 @@ import com.google.gson.annotations.SerializedName;
 /***
  * Class to set up getters and setters.
  */
-public class DiscoverModel
-{
+public class DiscoverModel {
     /** **/
     @SerializedName("page")
     @Expose
@@ -31,8 +30,7 @@ public class DiscoverModel
      * Gets page.
      * @return page
      */
-    public int getPage()
-    {
+    public int getPage() {
         return page;
     }
 
@@ -41,8 +39,7 @@ public class DiscoverModel
      * Gets results.
      * @return Results
      */
-    public List<Result> getResults()
-    {
+    public List<Result> getResults() {
         return results;
     }
 
@@ -52,8 +49,7 @@ public class DiscoverModel
      * Gets total results.
      * @return total results
      */
-    public int getTotalResults()
-    {
+    public int getTotalResults() {
         return totalResults;
     }
 
@@ -63,8 +59,7 @@ public class DiscoverModel
      * Gets total pages.
      * @return total pages.
      */
-    public int getTotalPages()
-    {
+    public int getTotalPages() {
         return totalPages;
     }
 
@@ -74,8 +69,7 @@ public class DiscoverModel
      * @return String New string form form the object passes in
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "DiscoverModel{" + "page=" + page
                 + ", results=" + results
                 + ", totalResults=" + totalResults

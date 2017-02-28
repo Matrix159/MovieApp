@@ -1,17 +1,11 @@
-package test;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import main.com.matrixprogramming.controller.MovieAPI;
 import main.com.matrixprogramming.model.DiscoverModel;
 import main.com.matrixprogramming.model.Result;
-import main.com.matrixprogramming.view.DiscoverSceneController;
-import main.com.matrixprogramming.view.GUI;
-import main.com.matrixprogramming.view.MovieController;
-import javafx.fxml.FXMLLoader;
 import org.junit.*;
 import org.junit.Assert;
 import retrofit2.Call;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -22,45 +16,14 @@ import java.util.List;
 public class APITest
 {
     private static MovieAPI movieAPI;
-    public DiscoverSceneController discoverSceneController;
-    private static MovieController movieController;
+
 
     @BeforeClass
     public static void setup() throws IOException
     {
         movieAPI = new MovieAPI();
-        /*System.out.println(APITest.class.getClassLoader().getResource("resources/discover_scene.fxml").toExternalForm());
-        FXMLLoader loader = new FXMLLoader(APITest.class.getResource("resources/discover_scene.fxml"));
-        loader.load();
-        discoverSceneController = loader.getController();
-        FXMLLoader loader2 = new FXMLLoader(APITest.class.getResource("resources/movie_item.fxml"));
-        loader.load();
-        movieController = loader2.getController();*/
     }
 
-    @Test
-    public void guiTEST()
-    {
-        /*GUI gui = new GUI();
-        gui.main(null);
-        gui.addMovie(null,"Title", 4.5, "The overview","04/25/2015");
-        Assert.assertTrue(gui.getListView().getItems().size() > 0);*/
-    }
-    @Test
-    public void controllersTest() throws IOException
-    {
-       /* DiscoverSceneController discoverSceneController;
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("./resources/discover_scene.fxml"));
-        System.out.println(loader.getLocation());
-        //loader.load();
-        discoverSceneController = loader.getController();
-        Assert.assertNotNull(discoverSceneController.getDiscoverButton());
-        FXMLLoader loader2 = new FXMLLoader(this.getClass().getResource("movie_item.fxml"));
-        //loader.load();
-        movieController = loader2.getController();
-        //Assert.assertNotNull(discoverSceneController);
-        //Assert.assertNotNull(movieController);*/
-    }
     @Test
     public void apiTest() throws IOException
     {
@@ -80,7 +43,6 @@ public class APITest
         Assert.assertTrue(discoverModel.getTotalResults() >= 0);
         Assert.assertTrue(discoverModel.getTotalPages() >= 1);
         Assert.assertNotNull(discoverModel.toString());
-        Assert.assertTrue(results.size() >= 0);
         for(Result result : results)
         {
             Assert.assertTrue(!result.isAdult());

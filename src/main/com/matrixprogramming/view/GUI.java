@@ -81,6 +81,7 @@ public final class GUI extends Application {
      */
     public static void main(final String[] args) {
         launch(args);
+
     }
 
     /**
@@ -186,7 +187,7 @@ public final class GUI extends Application {
                             for (Result result : response.body().getResults()) {
                                 addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(), result.getOverview(), result.getReleaseDate());
                             }
-
+                            System.out.println("Does this keep running?");
                             if (GUI.pageCounter < GUI.pageTotal) {
                                 GUI.pageCounter += 1;
                                 discover(sortBy, GUI.pageCounter);

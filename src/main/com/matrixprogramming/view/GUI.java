@@ -91,6 +91,8 @@ public final class GUI extends Application {
      */
     @Override
     public void start(final Stage window) throws IOException {
+        // This should fix the touch screen bug.
+        System.setProperty("glass.accessible.force", "false");
         sortByMapSetup(sortByMap);
         BorderPane root;
         DiscoverSceneController discoverSceneController;
@@ -231,15 +233,6 @@ public final class GUI extends Application {
         sortMovieByMap.put("Vote Average Descending", "vote_average.desc");
         sortMovieByMap.put("Vote Count Ascending", "vote_count.asc");
         sortMovieByMap.put("Vote Count Descending", "vote_count.desc");
-    }
-
-    /**
-     * Returns the list view holding the movie views.
-     * @return ListView
-     */
-    public ListView<HBox> getListView()
-    {
-        return listView;
     }
 
 

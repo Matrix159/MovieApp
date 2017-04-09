@@ -1,17 +1,23 @@
 package main.com.matrixprogramming.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
+/***
  * Created by Eldridge on 2/19/2017.
  */
 public class MovieController implements Initializable {
+    @FXML
+    private Button favButton;
     /**
      * ImageView container for movie images.
      */
@@ -43,6 +49,11 @@ public class MovieController implements Initializable {
     @FXML
     private ImageView starIcon;
 
+    @FXML
+    private Image favImage;
+
+
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
 
@@ -63,8 +74,29 @@ public class MovieController implements Initializable {
     public ImageView getStarIcon() {
         return starIcon;
     }
+
     /**
-     * Returns the movie title text.
+     * Returns the favorite button
+     * @return ButtonView
+     */
+    public Button getFavButton() { return favButton; }
+
+    /**
+     * Sets the favoriteButton the new version
+     * @param button New button to replace old one
+     */
+    public void setFavButton(final Button button) {
+        favButton = button;
+        favButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                favImage = new Image("/favoritedStar.png");
+            }
+        });
+    }
+
+    /***
+     * Returns title of movie
      * @return Text
      */
     public Text getMovieTitleText() {
@@ -93,5 +125,17 @@ public class MovieController implements Initializable {
      */
     public Text getMovieReleaseDate() {
         return movieReleaseDate;
+    }
+
+    /***
+     * Returns the favorite image
+     * @return Image
+     */
+    public Image getFavImage() {
+        return favImage;
+    }
+
+    public void setFavImage(Image newFavImage) {
+        this.favImage = newFavImage;
     }
 }

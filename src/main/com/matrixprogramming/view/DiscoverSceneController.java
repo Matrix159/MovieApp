@@ -5,11 +5,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
+/***
  * Created by Eldridge on 2/26/2017.
  */
 public final class DiscoverSceneController implements Initializable {
@@ -22,6 +23,9 @@ public final class DiscoverSceneController implements Initializable {
     /** */
     @FXML
     private ListView movieListView;
+    /** */
+    @FXML
+    private MenuItem close;
 
     /**
      * Method that runs when the controller is instantiated.
@@ -54,4 +58,10 @@ public final class DiscoverSceneController implements Initializable {
     public ListView getMovieListView() {
         return movieListView;
     }
+
+    /**
+     * Returns close button
+     * @retun close button
+     */
+    public MenuItem getClose(){ return close; }
 }

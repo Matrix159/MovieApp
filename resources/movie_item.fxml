@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.Button?>
 <HBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="570.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="570.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.com.matrixprogramming.view.MovieController">
     <ImageView fx:id="posterImage">
 
@@ -29,6 +30,11 @@
             <ImageView fx:id="starIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
 
             </ImageView>
+            <Button fx:id="favButton" prefHeight="100.0" prefWidth="200.0">
+                <ImageView fx:id="favIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+
+                </ImageView>
+            </Button>
         </HBox>
         <Text fx:id="movieDescription"  wrappingWidth="250.0" />
       <Region nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="ALWAYS" />

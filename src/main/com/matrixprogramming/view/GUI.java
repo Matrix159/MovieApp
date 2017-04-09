@@ -1,5 +1,6 @@
 package main.com.matrixprogramming.view;
 
+import javafx.scene.control.MenuItem;
 import main.com.matrixprogramming.controller.MovieAPI;
 import main.com.matrixprogramming.model.DiscoverModel;
 import main.com.matrixprogramming.model.Result;
@@ -59,6 +60,10 @@ public final class GUI extends Application {
      * PageCounter.
      **/
     private static int pageCounter = 1;
+    /**
+     * Close button
+     */
+    private static MenuItem close;
 
     /**
      * PageTotal.
@@ -87,7 +92,7 @@ public final class GUI extends Application {
     /**
      * Start method called upon launch(String[] args).
      * @param window The main stage
-     * @throws IOException
+     * @throws IOException Throws
      */
     @Override
     public void start(final Stage window) throws IOException {
@@ -99,6 +104,7 @@ public final class GUI extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("discover_scene.fxml"));
         root = loader.load();
         discoverSceneController = loader.getController();
+        close = discoverSceneController.getClose();
         listView = discoverSceneController.getMovieListView();
         sortByComboBox = discoverSceneController.getSortByComboBox();
         sortByComboBox.getItems().addAll("Popularity Ascending",
@@ -124,6 +130,9 @@ public final class GUI extends Application {
         window.setResizable(false);
         window.setTitle("Movie App");
         window.show();
+        close.setOnAction((e) -> {
+            System.exit(0);
+        });
     }
 
     /***
@@ -158,13 +167,16 @@ public final class GUI extends Application {
             movieController.getMovieDescription().setText(overview);
             movieController.getStarIcon().setImage(new Image(getClass().getResourceAsStream("/star.png")));
             movieController.getMovieReleaseDate().setText(releaseDate);
+            //movieController.setFavButton(new Button("Favorite", new ImageView(new Image(getClass().getResourceAsStream("/favoriteStarOutlineSmall.png")))));
+            movieController.setFavButton(new Button());
+            movieController.setFavImage(new Image("/favoriteStarOutlineSmall.png"));
             items.add(root);
         });
 
     }
 
     /*****
-     * Allows the user to search much more extensively for movies.
+     * Allows the user to search for movies.
      * @param sortBy String that we need the movies to be sorted by
      * @param localPageCounter Int of the current movie page we're on
      ****/
@@ -175,8 +187,8 @@ public final class GUI extends Application {
         LocalDate twoWeeksAgo = now.minusWeeks(2);
         LocalDate twoWeeksAhead = now.plusWeeks(2);
 
-        System.out.println(twoWeeksAgo);
-        System.out.println(twoWeeksAhead);
+        // System.out.println(twoWeeksAgo);
+        // System.out.println(twoWeeksAhead);
         movieAPI.getController().discover("en-us", sortBy,
                 "3|2", "US", "en", true,
                 localPageCounter, twoWeeksAgo.toString(),
@@ -187,7 +199,8 @@ public final class GUI extends Application {
                         if (response.isSuccessful()) {
                             GUI.pageTotal = response.body().getTotalPages();
                             for (Result result : response.body().getResults()) {
-                                addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(), result.getOverview(), result.getReleaseDate());
+                                addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(),
+                                        result.getOverview(), result.getReleaseDate());
                             }
                             System.out.println("Does this keep running?");
                             if (GUI.pageCounter < GUI.pageTotal) {
@@ -216,9 +229,8 @@ public final class GUI extends Application {
         );
     }
 
-    /**
+    /***
      * Sets up the sortByMap for the sort by combobox.
-     *
      * @param sortMovieByMap The Hashmap to map sort by values for
      *                       discover scene
      */

@@ -9,13 +9,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /***
  * Created by Eldridge on 2/19/2017.
  */
-public class MovieController implements Initializable {
+public class MovieController implements Initializable
+{
     @FXML
     private Button favButton;
     /**
@@ -53,77 +55,85 @@ public class MovieController implements Initializable {
     private Image favImage;
 
 
-
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) {
-
+    public void initialize(final URL location, final ResourceBundle resources)
+    {
+        // TODO: Cameron needs to set a boolean and an if statement
+        favButton.setOnAction(event ->
+                {
+                    Button button = (Button) event.getSource();
+                    button.setGraphic(new ImageView(new Image("favoritedStar.png")));
+                }
+        );
     }
 
     /**
      * Returns the poster image view.
+     *
      * @return ImageView
      */
-    public ImageView getPosterImage() {
+    public ImageView getPosterImage()
+    {
         return posterImage;
     }
 
     /**
      * Returns the star image view.
+     *
      * @return ImageView
      */
-    public ImageView getStarIcon() {
+    public ImageView getStarIcon()
+    {
         return starIcon;
     }
 
     /**
      * Returns the favorite button
+     *
      * @return ButtonView
      */
-    public Button getFavButton() { return favButton; }
-
-    /**
-     * Sets the favoriteButton the new version
-     * @param button New button to replace old one
-     */
-    public void setFavButton(final Button button) {
-        favButton = button;
-        favButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                favImage = new Image("/favoritedStar.png");
-            }
-        });
+    public Button getFavButton()
+    {
+        return favButton;
     }
+
 
     /***
      * Returns title of movie
      * @return Text
      */
-    public Text getMovieTitleText() {
+    public Text getMovieTitleText()
+    {
         return movieTitleText;
     }
 
     /**
      * Returns the vote average label.
+     *
      * @return Label
      */
-    public Label getVoteAverageLabel() {
+    public Label getVoteAverageLabel()
+    {
         return voteAverageLabel;
     }
 
     /**
      * Returns the movie description.
+     *
      * @return Text
      */
-    public Text getMovieDescription() {
+    public Text getMovieDescription()
+    {
         return movieDescription;
     }
 
     /**
      * Returns the movie release date.
+     *
      * @return Text
      */
-    public Text getMovieReleaseDate() {
+    public Text getMovieReleaseDate()
+    {
         return movieReleaseDate;
     }
 
@@ -131,11 +141,10 @@ public class MovieController implements Initializable {
      * Returns the favorite image
      * @return Image
      */
-    public Image getFavImage() {
+    public Image getFavImage()
+    {
         return favImage;
     }
 
-    public void setFavImage(Image newFavImage) {
-        this.favImage = newFavImage;
-    }
+
 }

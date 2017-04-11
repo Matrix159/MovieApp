@@ -1,6 +1,7 @@
 package main.com.matrixprogramming.view;
 
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
 import main.com.matrixprogramming.controller.MovieAPI;
 import main.com.matrixprogramming.model.DiscoverModel;
 import main.com.matrixprogramming.model.Result;
@@ -168,8 +169,7 @@ public final class GUI extends Application {
             movieController.getStarIcon().setImage(new Image(getClass().getResourceAsStream("/star.png")));
             movieController.getMovieReleaseDate().setText(releaseDate);
             //movieController.setFavButton(new Button("Favorite", new ImageView(new Image(getClass().getResourceAsStream("/favoriteStarOutlineSmall.png")))));
-            movieController.setFavButton(new Button());
-            movieController.setFavImage(new Image("favoriteStarOutline.png"));
+
             items.add(root);
         });
 

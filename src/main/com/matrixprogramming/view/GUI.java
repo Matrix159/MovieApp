@@ -169,7 +169,7 @@ public final class GUI extends Application {
             movieController.getMovieReleaseDate().setText(releaseDate);
             //movieController.setFavButton(new Button("Favorite", new ImageView(new Image(getClass().getResourceAsStream("/favoriteStarOutlineSmall.png")))));
             movieController.setFavButton(new Button());
-            movieController.setFavImage(new Image("/favoriteStarOutlineSmall.png"));
+            movieController.setFavImage(new Image("favoriteStarOutline.png"));
             items.add(root);
         });
 

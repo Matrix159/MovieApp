@@ -69,7 +69,7 @@ public final class GUI extends Application {
     /**
      * Close button.
      */
-    private static MenuItem close;
+    private MenuItem close;
 
     /**
      * PageTotal.

@@ -51,17 +51,11 @@ public class MovieController implements Initializable {
      */
     @FXML
     private ImageView starIcon;
-    /**
-     * Image for the favorite button.
-     */
-    @FXML
-    private Image favImage;
 
     /** Keeps track if a movie is favorite or not. **/
     public boolean favorite = false;
 
-    /** File to keep and read the stored movies. **/
-    private final File favoriteMovies = new File("movies.json");
+    private String posterPath;
 
     /***
      * @param location Location.
@@ -73,13 +67,15 @@ public class MovieController implements Initializable {
                     Button button = (Button) event.getSource();
                     if (!favorite) {
                         button.setGraphic(new ImageView(new Image("favoritedStar.png")));
-                        GUI.saveMovie(getMovieTitleText().getText(), getPosterImage().getAccessibleText(),
+                        GUI.saveMovie(getMovieTitleText().getText(), getPosterPath(),
+                                getVoteAverageLabel().getText(),
                                 getMovieDescription().getText(), getMovieReleaseDate().getText());
                         favorite = true;
 
                     } else {
                         button.setGraphic(new ImageView(new Image("favoriteStarOutline.png")));
-                        GUI.deleteMovie(getMovieTitleText().getText(), getPosterImage().getAccessibleText(),
+                        GUI.deleteMovie(getMovieTitleText().getText(), getPosterPath(),
+                                getVoteAverageLabel().getText(),
                                 getMovieDescription().getText(), getMovieReleaseDate().getText());
                         favorite = false;
                     }
@@ -97,6 +93,15 @@ public class MovieController implements Initializable {
         return posterImage;
     }
 
+    public String getPosterPath()
+    {
+        return posterPath;
+    }
+
+    public void setPosterPath(final String posterPath)
+    {
+        this.posterPath = posterPath;
+    }
     /**
      * Returns the star image view.
      *

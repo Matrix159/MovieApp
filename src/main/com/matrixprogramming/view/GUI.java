@@ -124,7 +124,8 @@ public final class GUI extends Application {
             pageCounter = 1;
             pageTotal = 0;
             items.clear();
-            if (sortByComboBox.getValue().equals("Favorites")) {
+
+            if (sortByComboBox.getValue() != null && sortByComboBox.getValue().equals("Favorites")) {
                 showFavorites();
                 return;
             }
@@ -151,8 +152,8 @@ public final class GUI extends Application {
      */
     private void showFavorites() {
         for (JsonElement o : savedMovies) {
-            addMovie("", o.getAsJsonObject().get("title").toString(), 12 ,
-                    o.getAsJsonObject().get("description").toString(), o.getAsJsonObject().get("releaseDate").toString());
+            addMovie(o.getAsJsonObject().get("image").getAsString(), o.getAsJsonObject().get("title").getAsString(), o.getAsJsonObject().get("voteAverage").getAsDouble(),
+                    o.getAsJsonObject().get("description").getAsString(), o.getAsJsonObject().get("releaseDate").getAsString());
         }
     }
 
@@ -183,6 +184,8 @@ public final class GUI extends Application {
             }
 
             movieController.getPosterImage().setImage(new Image("https://image.tmdb.org/t/p/w154" + posterPath));
+            System.out.println("https://image.tmdb.org/t/p/w154" + posterPath);
+            movieController.setPosterPath(posterPath);
             movieController.getMovieTitleText().setText(title);
             movieController.getVoteAverageLabel().setText(String.valueOf(voteAverage));
             movieController.getMovieDescription().setText(overview);
@@ -191,8 +194,8 @@ public final class GUI extends Application {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("title", title);
-            //jsonObject.addProperty("image", "null");
-            //jsonObject.addProperty("image", "https://image.tmdb.org/t/p/w154" + posterPath);
+            jsonObject.addProperty("image", posterPath);
+            jsonObject.addProperty("voteAverage", String.valueOf(voteAverage));
             jsonObject.addProperty("description", overview);
             jsonObject.addProperty("releaseDate", releaseDate);
             for (JsonElement o : savedMovies) {
@@ -310,10 +313,12 @@ public final class GUI extends Application {
      * @param movieReleaseDate Release date of movie
      */
     public static void saveMovie(final String movieTitle, final String movieURL,
+                                 final String voteAverage,
                                  final String movieDescription, final String movieReleaseDate) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", movieTitle);
-        //jsonObject.addProperty("image", movieURL);
+        jsonObject.addProperty("image", movieURL);
+        jsonObject.addProperty("voteAverage", voteAverage);
         jsonObject.addProperty("description", movieDescription);
         jsonObject.addProperty("releaseDate", movieReleaseDate);
         savedMovies.add(jsonObject);
@@ -327,11 +332,13 @@ public final class GUI extends Application {
      * @param movieReleaseDate Release date of movie
      */
     public static void deleteMovie(final String movieTitle, final String movieURL,
+                                   final String voteAverage,
                                    final String movieDescription, final String movieReleaseDate) {
         JsonArray newArray = new JsonArray();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", movieTitle);
-        //jsonObject.addProperty("image", movieURL);
+        jsonObject.addProperty("image", movieURL);
+        jsonObject.addProperty("voteAverage", voteAverage);
         jsonObject.addProperty("description", movieDescription);
         jsonObject.addProperty("releaseDate", movieReleaseDate);
         for (JsonElement o : savedMovies) {

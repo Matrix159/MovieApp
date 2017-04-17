@@ -60,8 +60,10 @@ public final class DiscoverSceneController implements Initializable {
     }
 
     /**
-     * Returns close button
-     * @retun close button
+     * Returns close button.
+     * @return close button
      */
-    public MenuItem getClose(){ return close; }
+    public MenuItem getClose() {
+        return close;
+    }
 }

@@ -1,5 +1,6 @@
 package main.com.matrixprogramming.view;
 
+
 import com.google.gson.*;
 import javafx.scene.control.MenuItem;
 import main.com.matrixprogramming.controller.MovieAPI;
@@ -27,13 +28,13 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 /***
- * GUI class that displays the main program window and handles all user
+ * GUI class that displays the main program window and handles all user.
  * actions.
  */
 public final class GUI extends Application {
 
     /***
-     * JSon array that will hold the movies
+     * JSon array that will hold the movies.
      */
     private static JsonArray savedMovies = new JsonArray();
 
@@ -66,7 +67,7 @@ public final class GUI extends Application {
      **/
     private static int pageCounter = 1;
     /**
-     * Close button
+     * Close button.
      */
     private static MenuItem close;
 
@@ -201,7 +202,7 @@ public final class GUI extends Application {
             for (JsonElement o : savedMovies) {
                 if (o.toString().equals(jsonObject.toString())) {
                     movieController.setFavButton("favoritedStar.png");
-                    movieController.favorite = true;
+                    movieController.setFavorite(true);
                 }
             }
 
@@ -309,12 +310,15 @@ public final class GUI extends Application {
      * Adds favorite movie to file.
      * @param movieTitle Title of movie
      * @param movieURL Url of movie image
+     * @param voteAverage Vote avgerage of the movie
      * @param movieDescription Description of movie
      * @param movieReleaseDate Release date of movie
      */
-    public static void saveMovie(final String movieTitle, final String movieURL,
+    static void saveMovie(final String movieTitle,
+                                 final String movieURL,
                                  final String voteAverage,
-                                 final String movieDescription, final String movieReleaseDate) {
+                                 final String movieDescription,
+                                 final String movieReleaseDate) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", movieTitle);
         jsonObject.addProperty("image", movieURL);
@@ -328,12 +332,15 @@ public final class GUI extends Application {
      * Deletes movie from file.
      * @param movieTitle Movie to be deleted
      * @param movieURL Url of movie image
+     * @param voteAverage Vote average of the movie
      * @param movieDescription Description of movie
      * @param movieReleaseDate Release date of movie
      */
-    public static void deleteMovie(final String movieTitle, final String movieURL,
+     static void deleteMovie(final String movieTitle,
+                                   final String movieURL,
                                    final String voteAverage,
-                                   final String movieDescription, final String movieReleaseDate) {
+                                   final String movieDescription,
+                                   final String movieReleaseDate) {
         JsonArray newArray = new JsonArray();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", movieTitle);

@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -52,9 +51,14 @@ public class MovieController implements Initializable {
     @FXML
     private ImageView starIcon;
 
-    /** Keeps track if a movie is favorite or not. **/
-    public boolean favorite = false;
+    /**
+     * Keeps track if a movie is favorite or not.
+     **/
+    private boolean favorite = false;
 
+    /***
+     * String to hold the location of teh image url.
+     */
     private String posterPath;
 
     /***
@@ -70,14 +74,14 @@ public class MovieController implements Initializable {
                         GUI.saveMovie(getMovieTitleText().getText(), getPosterPath(),
                                 getVoteAverageLabel().getText(),
                                 getMovieDescription().getText(), getMovieReleaseDate().getText());
-                        favorite = true;
+                        setFavorite(true);
 
                     } else {
                         button.setGraphic(new ImageView(new Image("favoriteStarOutline.png")));
                         GUI.deleteMovie(getMovieTitleText().getText(), getPosterPath(),
                                 getVoteAverageLabel().getText(),
                                 getMovieDescription().getText(), getMovieReleaseDate().getText());
-                        favorite = false;
+                        setFavorite(false);
                     }
                 }
         );
@@ -88,54 +92,49 @@ public class MovieController implements Initializable {
      *
      * @return ImageView
      */
-    public ImageView getPosterImage()
-    {
+    final ImageView getPosterImage() {
         return posterImage;
     }
 
-    public String getPosterPath()
-    {
+    /***
+     * Returns poster path of image.
+     * @return posterPath the image url.
+     */
+    private String getPosterPath() {
         return posterPath;
     }
 
-    public void setPosterPath(final String posterPath)
-    {
-        this.posterPath = posterPath;
+    /***
+     * Sets a new poster path.
+     * @param newPosterPath new poster path
+     */
+    final void setPosterPath(final String newPosterPath) {
+        posterPath = newPosterPath;
     }
+
     /**
      * Returns the star image view.
      *
      * @return ImageView
      */
-    public ImageView getStarIcon()
-    {
+    final ImageView getStarIcon() {
         return starIcon;
     }
 
-    /**
-     * Returns the favorite button
-     *
-     * @return ButtonView
+    /***
+     * Sets the image of the favorite button.
+     * @param url Ending of teh url of the movie.
      */
-    public Button getFavButton()
-    {
-        return favButton;
-    }
-
-    /**
-     * Sets the image of the favorite button
-     */
-    public void setFavButton(String url) {
+    final void setFavButton(final String url) {
         favButton.setGraphic(new ImageView(new Image(url)));
     }
 
 
     /***
-     * Returns title of movie
+     * Returns title of movie.
      * @return Text
      */
-    public Text getMovieTitleText()
-    {
+    final Text getMovieTitleText() {
         return movieTitleText;
     }
 
@@ -144,8 +143,7 @@ public class MovieController implements Initializable {
      *
      * @return Label
      */
-    public Label getVoteAverageLabel()
-    {
+    final Label getVoteAverageLabel() {
         return voteAverageLabel;
     }
 
@@ -154,8 +152,7 @@ public class MovieController implements Initializable {
      *
      * @return Text
      */
-    public Text getMovieDescription()
-    {
+    final Text getMovieDescription() {
         return movieDescription;
     }
 
@@ -164,12 +161,15 @@ public class MovieController implements Initializable {
      *
      * @return Text
      */
-    public Text getMovieReleaseDate()
-    {
+    final Text getMovieReleaseDate() {
         return movieReleaseDate;
     }
 
-
-
-
+    /***
+     * Sets the favorite property of a movie.
+     * @param newFavorite New favorite property of a movie.
+     */
+    final void setFavorite(final Boolean newFavorite) {
+        favorite = newFavorite;
+    }
 }

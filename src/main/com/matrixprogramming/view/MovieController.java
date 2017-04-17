@@ -1,7 +1,5 @@
 package main.com.matrixprogramming.view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,14 +8,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 /***
  * Created by Eldridge on 2/19/2017.
  */
-public class MovieController implements Initializable
-{
+public class MovieController implements Initializable {
+    /**
+     * Button to contain the favorite action.
+     */
     @FXML
     private Button favButton;
     /**
@@ -50,19 +51,38 @@ public class MovieController implements Initializable
      */
     @FXML
     private ImageView starIcon;
-
+    /**
+     * Image for the favorite button.
+     */
     @FXML
     private Image favImage;
 
+    /** Keeps track if a movie is favorite or not. **/
+    public boolean favorite = false;
 
+    /** File to keep and read the stored movies. **/
+    private final File favoriteMovies = new File("movies.json");
+
+    /***
+     * @param location Location.
+     * @param resources Resources.
+     */
     @Override
-    public void initialize(final URL location, final ResourceBundle resources)
-    {
-        // TODO: Cameron needs to set a boolean and an if statement
-        favButton.setOnAction(event ->
-                {
+    public void initialize(final URL location, final ResourceBundle resources) {
+        favButton.setOnAction(event -> {
                     Button button = (Button) event.getSource();
-                    button.setGraphic(new ImageView(new Image("favoritedStar.png")));
+                    if (!favorite) {
+                        button.setGraphic(new ImageView(new Image("favoritedStar.png")));
+                        GUI.saveMovie(getMovieTitleText().getText(), getPosterImage().getAccessibleText(),
+                                getMovieDescription().getText(), getMovieReleaseDate().getText());
+                        favorite = true;
+
+                    } else {
+                        button.setGraphic(new ImageView(new Image("favoriteStarOutline.png")));
+                        GUI.deleteMovie(getMovieTitleText().getText(), getPosterImage().getAccessibleText(),
+                                getMovieDescription().getText(), getMovieReleaseDate().getText());
+                        favorite = false;
+                    }
                 }
         );
     }
@@ -95,6 +115,13 @@ public class MovieController implements Initializable
     public Button getFavButton()
     {
         return favButton;
+    }
+
+    /**
+     * Sets the image of the favorite button
+     */
+    public void setFavButton(String url) {
+        favButton.setGraphic(new ImageView(new Image(url)));
     }
 
 
@@ -137,14 +164,7 @@ public class MovieController implements Initializable
         return movieReleaseDate;
     }
 
-    /***
-     * Returns the favorite image
-     * @return Image
-     */
-    public Image getFavImage()
-    {
-        return favImage;
-    }
+
 
 
 }

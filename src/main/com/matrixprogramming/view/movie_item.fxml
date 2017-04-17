@@ -33,7 +33,7 @@
 
             <Button fx:id="favButton">
             <graphic>
-                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image fx:id="favImage" url="/favoriteStarOutline.png"/>
                     </image>

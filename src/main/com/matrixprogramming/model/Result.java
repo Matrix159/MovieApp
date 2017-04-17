@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /***
- * POGO to get every/anything on a movie.
+ * POJO to get every/anything on a movie.
  */
 public class Result {
 

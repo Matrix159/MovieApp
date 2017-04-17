@@ -1,7 +1,7 @@
 package main.com.matrixprogramming.view;
 
+import com.google.gson.*;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import main.com.matrixprogramming.controller.MovieAPI;
 import main.com.matrixprogramming.model.DiscoverModel;
 import main.com.matrixprogramming.model.Result;
@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 
@@ -32,6 +32,10 @@ import java.util.HashMap;
  */
 public final class GUI extends Application {
 
+    /***
+     * JSon array that will hold the movies
+     */
+    private static JsonArray savedMovies = new JsonArray();
 
     /**
      * Combo box containing sorting options.
@@ -97,6 +101,7 @@ public final class GUI extends Application {
      */
     @Override
     public void start(final Stage window) throws IOException {
+        loadData();
         // This should fix the touch screen bug.
         System.setProperty("glass.accessible.force", "false");
         sortByMapSetup(sortByMap);
@@ -108,7 +113,7 @@ public final class GUI extends Application {
         close = discoverSceneController.getClose();
         listView = discoverSceneController.getMovieListView();
         sortByComboBox = discoverSceneController.getSortByComboBox();
-        sortByComboBox.getItems().addAll("Popularity Ascending",
+        sortByComboBox.getItems().addAll("Favorites", "Popularity Ascending",
                 "Popularity Descending", "Release Date Ascending",
                 "Release Date Descending", "Revenue Ascending",
                 "Revenue Descending", "Vote Average Ascending",
@@ -119,6 +124,10 @@ public final class GUI extends Application {
             pageCounter = 1;
             pageTotal = 0;
             items.clear();
+            if (sortByComboBox.getValue().equals("Favorites")) {
+                showFavorites();
+                return;
+            }
             discover(sortByMap.get(sortByComboBox.getValue()), 1);
 
         });
@@ -129,11 +138,22 @@ public final class GUI extends Application {
         window.setHeight(WINDOW_HEIGHT);
         window.setScene(scene);
         window.setResizable(false);
-        window.setTitle("Movie App");
+        window.setTitle("Movie Database Search");
         window.show();
         close.setOnAction((e) -> {
+            saveData();
             System.exit(0);
         });
+    }
+
+    /***
+     * Special method that shows the favorites from the file.
+     */
+    private void showFavorites() {
+        for (JsonElement o : savedMovies) {
+            addMovie("", o.getAsJsonObject().get("title").toString(), 12 ,
+                    o.getAsJsonObject().get("description").toString(), o.getAsJsonObject().get("releaseDate").toString());
+        }
     }
 
     /***
@@ -168,11 +188,22 @@ public final class GUI extends Application {
             movieController.getMovieDescription().setText(overview);
             movieController.getStarIcon().setImage(new Image(getClass().getResourceAsStream("/star.png")));
             movieController.getMovieReleaseDate().setText(releaseDate);
-            //movieController.setFavButton(new Button("Favorite", new ImageView(new Image(getClass().getResourceAsStream("/favoriteStarOutlineSmall.png")))));
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("title", title);
+            //jsonObject.addProperty("image", "null");
+            //jsonObject.addProperty("image", "https://image.tmdb.org/t/p/w154" + posterPath);
+            jsonObject.addProperty("description", overview);
+            jsonObject.addProperty("releaseDate", releaseDate);
+            for (JsonElement o : savedMovies) {
+                if (o.toString().equals(jsonObject.toString())) {
+                    movieController.setFavButton("favoritedStar.png");
+                    movieController.favorite = true;
+                }
+            }
 
             items.add(root);
         });
-
     }
 
     /*****
@@ -187,8 +218,6 @@ public final class GUI extends Application {
         LocalDate twoWeeksAgo = now.minusWeeks(2);
         LocalDate twoWeeksAhead = now.plusWeeks(2);
 
-        // System.out.println(twoWeeksAgo);
-        // System.out.println(twoWeeksAhead);
         movieAPI.getController().discover("en-us", sortBy,
                 "3|2", "US", "en", true,
                 localPageCounter, twoWeeksAgo.toString(),
@@ -202,11 +231,10 @@ public final class GUI extends Application {
                                 addMovie(result.getPosterPath(), result.getTitle(), result.getVoteAverage(),
                                         result.getOverview(), result.getReleaseDate());
                             }
-                            System.out.println("Does this keep running?");
+                            // System.out.println("Does this keep running?");
                             if (GUI.pageCounter < GUI.pageTotal) {
                                 GUI.pageCounter += 1;
                                 discover(sortBy, GUI.pageCounter);
-
                             } else {
                                 Platform.runLater(() -> listView.setItems(items));
                             }
@@ -235,7 +263,8 @@ public final class GUI extends Application {
      *                       discover scene
      */
     private void sortByMapSetup(final HashMap<String, String> sortMovieByMap) {
-        sortMovieByMap.put("Popularity Ascending", "popularity.asc");
+        sortMovieByMap.put("Favorites", "favorites");
+        sortMovieByMap.put("Popularity Ascending", "favorites");
         sortMovieByMap.put("Popularity Descending", "popularity.desc");
         sortMovieByMap.put("Release Date Ascending", "release_date.asc");
         sortMovieByMap.put("Release Date Descending", "release_date.desc");
@@ -247,6 +276,72 @@ public final class GUI extends Application {
         sortMovieByMap.put("Vote Count Descending", "vote_count.desc");
     }
 
+    /***
+     * Loads the favorited movies from local storage.
+     */
+    private void loadData() {
+        try {
+            JsonParser parser = new JsonParser();
+            Object obj = parser.parse(new FileReader("C:\\Users\\Doomninja\\IdeaProjects\\MovieApp\\movies.json"));
+            savedMovies = (JsonArray) obj;
+        } catch (FileNotFoundException notFound) {
+          System.out.println("File not found.");
+        } catch (Exception e) {
+            System.out.println("You broke it.");
+        }
+    }
 
+    /***
+     * Saves the data to Local Storage in between uses.
+     */
+    private void saveData() {
+        try (Writer writer = new FileWriter("movies.json")) {
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(savedMovies, writer);
+        } catch (Exception e) {
+            System.out.println("You broke it.");
+        }
+    }
+    /***
+     * Adds favorite movie to file.
+     * @param movieTitle Title of movie
+     * @param movieURL Url of movie image
+     * @param movieDescription Description of movie
+     * @param movieReleaseDate Release date of movie
+     */
+    public static void saveMovie(final String movieTitle, final String movieURL,
+                                 final String movieDescription, final String movieReleaseDate) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("title", movieTitle);
+        //jsonObject.addProperty("image", movieURL);
+        jsonObject.addProperty("description", movieDescription);
+        jsonObject.addProperty("releaseDate", movieReleaseDate);
+        savedMovies.add(jsonObject);
+    }
 
+    /***
+     * Deletes movie from file.
+     * @param movieTitle Movie to be deleted
+     * @param movieURL Url of movie image
+     * @param movieDescription Description of movie
+     * @param movieReleaseDate Release date of movie
+     */
+    public static void deleteMovie(final String movieTitle, final String movieURL,
+                                   final String movieDescription, final String movieReleaseDate) {
+        JsonArray newArray = new JsonArray();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("title", movieTitle);
+        //jsonObject.addProperty("image", movieURL);
+        jsonObject.addProperty("description", movieDescription);
+        jsonObject.addProperty("releaseDate", movieReleaseDate);
+        for (JsonElement o : savedMovies) {
+            if (!o.toString().equals(jsonObject.toString())) {
+                newArray.add(o);
+            }
+        }
+        savedMovies = newArray;
+        System.out.println(savedMovies.toString());
+    }
 }
+
+

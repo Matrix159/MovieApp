@@ -185,7 +185,7 @@ public final class GUI extends Application {
             }
 
             movieController.getPosterImage().setImage(new Image("https://image.tmdb.org/t/p/w154" + posterPath));
-            System.out.println("https://image.tmdb.org/t/p/w154" + posterPath);
+            //out.println("https://image.tmdb.org/t/p/w154" + posterPath);
             movieController.setPosterPath(posterPath);
             movieController.getMovieTitleText().setText(title);
             movieController.getVoteAverageLabel().setText(String.valueOf(voteAverage));
@@ -286,7 +286,7 @@ public final class GUI extends Application {
     private void loadData() {
         try {
             JsonParser parser = new JsonParser();
-            Object obj = parser.parse(new FileReader("C:\\Users\\Doomninja\\IdeaProjects\\MovieApp\\movies.json"));
+            Object obj = parser.parse(new FileReader("movies.json"));
             savedMovies = (JsonArray) obj;
         } catch (FileNotFoundException notFound) {
           System.out.println("File not found.");
@@ -354,7 +354,7 @@ public final class GUI extends Application {
             }
         }
         savedMovies = newArray;
-        System.out.println(savedMovies.toString());
+        //System.out.println(savedMovies.toString());
     }
 }
 
